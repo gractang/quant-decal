@@ -1,0 +1,31 @@
+\documentclass[12pt,svgnames,dvipsnames]{article}
+\usepackage{silence}
+%Disable all warnings issued by latex starting with "You have..."
+\WarningFilter{amsthm}{Unknown theoremstyle}
+\WarningFilter{latex}{You have requested package}
+
+\input{Tex/custom_envs}
+\input{Tex/macros}
+\usepackage{parskip}
+\usepackage{lecturenotes}
+
+\rhead{Grace Tang \flower \today} 
+\lhead{Quant Decal Lecture Notes}
+
+\begin{document}
+\tableofcontents
+
+\input{Lectures/01}
+\pagebreak
+
+\input{Lectures/02}
+\pagebreak
+
+\input{Lectures/03}
+\pagebreak
+
+\input{Lectures/04}
+\pagebreak 
+
+\input{Lectures/05}
+\end{document}

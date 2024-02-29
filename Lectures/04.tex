@@ -1,0 +1,145 @@
+\lecture{Market Strategies -- 2/21/24}
+
+Participation rate
+If you trade for a very big size, it often makes sense to think in terms of \vocab{participation rate}
+\begin{itemize}
+    \item \# shares traded / ADV (average daily value)
+    \item Or over some other time period
+\end{itemize}
+For a sense of scale, if you have 1\% participation rate in Tesla, you're trading 300mil a day
+
+Liquidity Impact
+\begin{itemize}
+    \item A high participation rate can \vocab{impact} the liquidity of a market
+        \begin{itemize}
+            \item Remember: market makers should be fading to you
+            \item i.e. they shoudl be less willing to provide at previous levels the more you trade
+        \end{itemize}
+    \item If you're building a position and have a 10\% participation rate, you're probably moving the price
+\end{itemize}
+
+Slippage
+\begin{itemize}
+    \item We call the effect of the market price moving against you \vocab{slippage}.
+    \item  If you're buying, the price moves up, and vice versa
+    \item Depending on the depth and spread of the book, the slippage could be greater or lesser, which should shape how you make your trades.
+\end{itemize}
+
+\vocab{Depth}: how many orders there are (deep vs shallow). Shallow: bad for large orders, as you end up interacting with a lot of the market (and getting worse prices the larger the order is).
+
+\vocab{Spread}: how tight the market is; that is, what the difference between the highest bid and lowest ask is.
+
+\subsection{Execution Strategies}
+How do decrease participation rate at any given time frame?
+\begin{itemize}
+    \item Overall idea: slice up your orders
+    \item Buy the same, small amount at every moment
+        \begin{itemize}
+            \item This is called \vocab{TWAP (tee-wap)}: time weighted average price 
+            \item Problem: when everyone else is trading very little, this strategy doesn't adjust
+        \end{itemize}
+    \item Buy a small, proportionate amount to everyone else's volume at every moment
+        \begin{itemize}
+            \item This is called \vocab{VWAP (vee-wap)}: volume weighted average price
+            \item The principle behind doing this is that people tend to trade more at the start and end of the day, which would make you less likely to move the market when buying more at that time
+            \item This turns out to be the best passive approach
+        \end{itemize}
+\end{itemize}
+
+Alpha Loss
+\begin{itemize}
+    \item In a competitive market, your edge expires over time, so you want to trade fast
+        \begin{itemize}
+            \item If you knew the price would rise 20\% throughout the day, then you most prefer to buy instantly
+            \item Every hour you wait before buying, the price moves against you
+        \end{itemize}
+
+    \item But minimizing impact requires moving slow; you want to spread out your orders
+    \item The total amount you lose to execution is called \vocab{shortfall}: alpha loss + liquidity impact
+\end{itemize}
+
+Sharing Alpha
+\begin{itemize}
+    \item When multiple market participants have alpha, they can't all trade as if they are the only one moving the price. They would overshoot, trading more than they should individually
+    \item Not so obvious how you can tell when the price has moved enough
+        \begin{itemize}
+            \item As you're executing your trades, your fairs are updating live!
+            \item And what if you're making decisions at the same time as others? Even more complications...
+        \end{itemize}
+\end{itemize}
+
+Capacity
+\begin{itemize}
+    \item The \vocab{capacity} of a given source of edge is the maximum volume you can trade on while still making money
+    \item At some point, your impact and transaction costs will offset any profits you can make
+    \item If multiple participants have the same source of edge, they should probably share it!
+    \item Trading firms think this way: if Jane St and HRT both found the same strategy, they would each have to dial down the size of the trade by half
+\end{itemize}
+
+(Over-)Providing
+\begin{itemize}
+    \item This idea extends to market making too!
+    \item A customer comes in and wants to buy 100 boxes. There are a lot of questions...
+        \begin{itemize}
+            \item How aggressively should you offer boxes?
+            \item What if you knew the customer was Peter, who loves gambling?
+            \item What if you knew the customer was a hedge fund?
+            \item What if you weren't sure?
+        \end{itemize}
+    \item There's some ``right'' amount to provide depending on how informed, or \vocab{toxic}, the customers are.
+\end{itemize}
+
+Information Leakage
+\begin{itemize}
+    \item A final consideration is hiding your trade. If your trading system leaves a signature (ex. always doing 1\% of the volume in the past minute) then others can see your trades on the open market!
+    \item If someone knows you're trying to do a trade, they can beat you to it!
+    \item Thus, you'll often want to add some noise to how you make trades in order to reduce how obvious it is
+        \begin{itemize}
+            \item Maybe add or subtract a little bit from your size
+            \item Maybe add some random pauses
+        \end{itemize}
+\end{itemize}
+
+\subsection{Trading in Everyday Life}
+Claim: Ideas from trading are generalizable and useful. (good luck peter!)
+
+\subsubsection{Thinking Like a Trader}
+Let's analyze some situations from everyday life (i.e. quant recruiting...)
+\begin{itemize}
+    \item Trading firm A gives out 100 offers to the best 100 applicants. 50 accept. But they seem not as good as the average offeree. What's up?
+        \begin{itemize}
+            \item Adverse selection babyyy
+            \item Tobi says: the other 50 are going to Jane Street. He's probably right.
+            \item Probably getting the 50 people that you don't really want
+        \end{itemize}
+
+    \item Trading firm B only hands out exploding offers -- you have 3 days to accept
+        \begin{itemize}
+            \item Banks on the risk-averse nature of people
+            \item It is so much worse to have 0 offers for more people that most are willing to forgo the higher expected value of continuing to recruit for a different firm
+        \end{itemize}
+
+    \item Trading firm C sees that trading firm A gives an applicant an offer. Now, trading firm C is more willing to give out the offer to the same applicant
+        \begin{itemize}
+            \item Essentially fading to the market -- average the perceptions of firm C and firm A
+        \end{itemize}
+    \item Trading firm D and trading firm E are trying to figure out what intern salary to pay. They don't know what the otehr will pay; they don't want the other to find out.
+        \begin{itemize}
+            \item This is basically more game theory stuff + info leakage
+            \item If you know what the other firm is offering, then you would be able to offer slightly above that
+            \item This is actually better for the applicant -- no collusion
+        \end{itemize}
+\end{itemize}
+
+\subsubsection{Trading as an Ideology}
+\begin{itemize}
+    \item Trading is ideological, in the sense that it makes claims about the way the world is and should be
+    \item Tenets: gerneally taken for granted, but it's good to not get too stuck on it
+        \begin{itemize}
+            \item Competition
+            \item Self-interest
+            \item Approximate rationality
+            \item Economic reduction
+            \item Utilitarianism
+        \end{itemize}
+\end{itemize}

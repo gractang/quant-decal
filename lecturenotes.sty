@@ -1,0 +1,71 @@
+\NeedsTeXFormat{LaTeX2e}
+\ProvidesPackage{lecturenotes}
+
+% Define the package dependencies
+\RequirePackage{hyperref}
+
+
+% Define a counter for lecture numbers
+\newcounter{lecture}
+
+\newcounter{appendix}[section]
+\renewcommand{\theappendix}{\Alph{appendix}}
+
+% Define a list to hold the lecture titles
+\newcommand{\lecturelist}{}
+
+\definecolor{mycolor}{RGB}{160,32,240}
+
+% Define the lecture command
+\newcommand{\lecture}[1]{%
+  \newpage
+  % Increment the lecture counter
+  \refstepcounter{lecture}%
+  \refstepcounter{section}
+  % Add the lecture title to the list
+  \addcontentsline{toc}{section}{Lecture \thelecture: #1}%
+  \renewcommand{\lecturelist}{\lecturelist #1\\}%
+  % Print the boxed header with background shading
+  \begin{center}
+    \setlength{\fboxrule}{2pt}
+    \setlength{\fboxsep}{10pt}
+    \definecolor{mycolor}{RGB}{160,32,240}
+    {\fcolorbox{mycolor}{white}{\parbox{\dimexpr\textwidth-2\fboxsep-2\fboxrule}{\centering\textbf{\Large Lecture \thelecture: #1}}}}
+  \end{center}
+}
+
+\definecolor{olivegreen}{RGB}{154,205,50}
+\newcommand{\lectureappendix}[1]{
+  \newpage
+  % Increment the lecture counter
+  \refstepcounter{appendix}%
+  % Add the lecture title to the list
+  \addcontentsline{toc}{subsection}{\textcolor{olivegreen}{Appendix \theappendix: #1}}%
+  \renewcommand{\lecturelist}{\lecturelist #1\\}%
+  % Print the boxed header with background shading
+  \begin{center}
+    \setlength{\fboxrule}{2pt}
+    \setlength{\fboxsep}{10pt}
+    
+    {\fcolorbox{olivegreen}{white}{\parbox{\dimexpr\textwidth-2\fboxsep-2\fboxrule}{\centering\textbf{\Large Appendix \theappendix: #1}}}}
+  \end{center}
+}
+
+% Define a command to create a separate table of contents page with header
+\newcommand{\lecturetableofcontents}{
+  \tableofcontents
+  \newpage
+}
+
+% Define the package options
+\DeclareOption{nocenter}{\renewcommand{\lecture}[1]{%
+  \refstepcounter{lecture}%
+  \addcontentsline{toc}{subsection}{Lecture \thelecture: #1}%
+  \renewcommand{\lecturelist}{\lecturelist #1\\}%
+  \fbox{\textbf{Lecture \thelecture}: #1}\par\noindent%
+}}
+
+\ProcessOptions\relax
+
+% Define the package end
+\endinput

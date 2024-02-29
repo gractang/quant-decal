@@ -1,0 +1,120 @@
+\lecture{Options -- 2/28/24}
+
+\subsection{What is an Option?}%
+\label{sub:What is an Option?}
+
+\begin{itemize}
+    \item An option is the right, but not the obligation, to buy or sell a \vocab{contract size} (quantity) of an \vocab{underlying} asset for a specified \vocab{strike} price on a given \vocab{expiry date}.
+    \item They can be used to hedge risk, increase leverage, or speculate on the probability distribution of future price movements.
+    \item Since options are strictly beneficial for the option holder (you don't have to buy/sell if you don't want to!) it costs a \vocab{premium} to purchase them.
+\end{itemize}
+
+\subsection{Why Options?}%
+\label{sub:Why Options?}
+
+\begin{itemize}
+    \item Options give us exposure to different price levels, allowing us to express complex beliefs about future price distributions
+    \item Stocks allow us to make directional bets (long or short shares), but options allow us to make bets on
+        \begin{itemize}
+            \item stock direction
+            \item stock staying within or outside a range within a timeframe
+            \item volatility
+            \item distributional bets
+            \item dispersion bets
+        \end{itemize}
+\end{itemize}
+
+\subsection{Important Options Terms}%
+\label{sub:Important Options Terms}
+\begin{itemize}
+    \item \vocab{Long}: buying options
+    \item \vocab{Short}: selling options
+    \item \vocab{Strike Price}: specified price that we transact at in an option
+    \item \vocab{Premium}: price that we pay for an option
+    \item \vocab{Multiplier}: amount of the asset that we trade in an option (usually, 100 for stock options)
+    \item \vocab{Expiration Date}: closing price date
+    \item % TODO 
+\end{itemize}
+
+\subsection{Pricing Options}%
+\label{sub:Pricing Options}
+We'll get more into this later, but here's a simpler example to get us thinking about how options might be priced:
+
+\begin{example}
+    Three coins are flipped. The price settles at a dollar for every coin that comes up heads. What is the fair price for the \$1 call option?
+
+    \begin{solution}
+        Let's consider all the possible settling prices: 0, 1, 2, and 3. The odds of 0 and 3 are identical at $ \left( \frac{1}{2} \right) ^3 = \frac{1}{8} $. By symmetry (or casework), the odds of 1 and 2 are equal at $ \frac{3}{8} $. 
+        
+        If the price settles at 0 or 1, we don't make any money (recall that we don't \textit{have} to exercise our option, hence the name option). If we bought at 1 when the price is zero that would be bad, so we simply don't buy. 
+
+        If the prices settles at 2 or 3, we make money; specifically, we make a dollar if it's 2 and two dollars if it's 3 (you've bought the stock for 1 but it's actually worth 2 or 3).
+
+        Combining these, we can calculate the expected value of the option: 
+        \begin{equation*}
+            \frac{1}{8}(0) + \frac{3}{8}(0) + \frac{3}{8}(1) + \frac{1}{8}(2) = \boxed{\frac{5}{8}}.
+        \end{equation*}
+        
+    \end{solution}
+    
+\end{example}
+
+\subsection{Intrinsic vs Extrinsic Value}%
+\label{sub:Intrinsic vs Extrinsic Value}
+\begin{itemize}
+    \item An option has intrinsic value if you can exercise it immediately for a profit
+        \begin{itemize}
+            \item For example, if you own the 100-strike Apple call and it's currently trading at 150, then the call must be worth at least 50 (otherwise someone could buy it, exercise it, and sell the stock for a profit)
+            \item Thus the option has an \vocab{intrinsic} value of 50
+        \end{itemize}
+    \item The remainder of the option's price is its \vocab{extrinsic value}, or \vocab{premium}
+        \begin{itemize}
+            \item The 100-strike call from the earlier example might cost a total of 55, for \$5 of premium.
+            \item This represents the actual ``optionality'' you're buying
+        \end{itemize}
+\end{itemize}
+
+\subsection{Synthetics}%
+\label{sub:Synthetics}
+\begin{itemize}
+    \item A synthetic involves buying a call and selling a put on the same strike
+    \item This is usually cheaper than actually buying/selling the stock itself, but with the same payoff
+% TODO include payoff diagram later tm
+\end{itemize}
+
+\subsection{Put-Call Parity}%
+\label{sub:Put-Call Parity}
+\begin{itemize}
+    \item Buying a call and selling a put has the same payoff structure as buying the stock!
+        \begin{itemize}
+            \item The value of a stock at the expiry date is the closing price, but the value of the synthetic is the closing price - the strike price
+            \item To prevent arbitrage, buying a call, selling a put, and selling the underlying stock must be exactly equal to the futures price
+        \end{itemize}
+    \item Note that in practice you need to account for interest rates, which is usually done by using the present value of the strike price
+    \item Also, there are some technicalities that have to do withthe American vs European options characteristics (in Europe, options can only be exercised on the expiry date; in America, have early-exercise options)
+    \item
+        \begin{equation*}
+            \text{futures price} - \text{call price} + \text{put price} - \text{strike} = 0
+        \end{equation*}
+        
+\end{itemize}
+
+\begin{remark}
+    Note that if volatility is high, options tend to worth more (the upside is larger, but you don't lose money if it's bad!)
+\end{remark}
+
+\subsection{Greeks}%
+\label{sub:Greeks}
+
+\subsubsection{Delta}
+\begin{example}
+    \begin{itemize}
+        \item Apple is currently trading at \$150, and I own the 100-strike call and the 200-strike call. Which option has more delta?
+
+            \begin{solution}
+                There's a very low chance the stock drops below \$100, so that call is very likely in the money and getting exercised. However, it's very unlikely that the stock will be above \$200, so that call is probably not in the money. Thus, the 100-strike call has more delta.
+            \end{solution}
+            
+    \end{itemize}
+\end{example}
+

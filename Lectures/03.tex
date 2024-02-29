@@ -1,0 +1,54 @@
+\lecture{Risk, EV, etc. -- 2/14/24}
+
+What is risk?
+\begin{itemize}
+    \item \vocab{Risk}: The chance that an outcome or investment's actual gains will differ from an expected outcome or return
+\item \vocab{Expected value} of a random variable $ X $ where $ x_{i} $ is a given value it could take on, and $ p(x_{i}) $ is the probability $ X $ takes on that value. That is,
+        \begin{equation*}
+            \EE[X] = \sum x_{i} p(x_{i})
+        \end{equation*}
+    \item \vocab{Variance} is the expected deviation from that expected value, squared. That is,
+        \begin{equation*}
+            \var(X) = \EE[(X - \EE[X])^2]
+        \end{equation*}
+    \item A common example of risk management is buying insurance— of course, it's a small chance that your house burns down, but you're so devastated if it happens that it's just better to pay a bit every month.
+\end{itemize}
+
+Risk Aversion
+\begin{itemize}
+    \item People tend to have a preference against variance, due to diminishing marginal returns to money
+    \item Conceave utility function: the utility/subjective value you get out of money decreases at the margin as your wealth increases
+\end{itemize}
+
+Risk Premiums
+\begin{itemize}
+    \item Some assets are (nearly) risk-free (ex. treasuries, cash)
+    \item Some are much more risky, like equities, and receive a ``risk premium,'' in the sense that they return more money in expectation with the tradeoff of more variance
+\end{itemize}
+
+\subsection{Kelly Criterion}
+Where losing the bet involves losing the entire wager, the Kelly bet is:
+\begin{equation*}
+    f^* = p - \frac{q}{b} = p - \frac{1-p}{b}
+\end{equation*}
+where
+\begin{itemize}
+    \item $ f^* $ is the fraction of the current bankroll to wager
+    \item $ p $ is the probability of a win
+    \item $ q $ is the probability of a loss ($ 1-p $)
+    \item $ b $ is the proportion of the bet gained with a win
+\end{itemize}
+
+Independent Bets
+\begin{itemize}
+    \item If there are multiple options with the same payout, you're going to want to allocate chips among all options, since the chance of busting is only $ \frac{1}{8} $.
+    \item There's actually a generalization of the kelly criterion which gives an explicit formula for how to bet on multiple events
+\end{itemize}
+
+If some events are correlated, that increases variance, and vice versa.
+
+Hedging
+\begin{itemize}
+    \item This is the opposite of the correlated events and we are happy!
+    \item Basically free money :)
+\end{itemize}

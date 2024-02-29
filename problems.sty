@@ -1,0 +1,82 @@
+%this is the package where i format problems woo
+\NeedsTeXFormat{LaTeX2e}
+\ProvidesPackage{problems}[2021/06/30 problem set template]
+\RequirePackage[compact]{titlesec}
+\RequirePackage{changepage}
+\usepackage{minted}
+
+% \definecolor{shadecolor}{gray}{0.95}
+\definecolor{shadecolor}{RGB}{230, 220, 250} % switch to this if you want purple :)
+
+%the format (font, bold, italics, etc) of the "Problem" word
+\newcommand{\problemformat}{\normalfont\bfseries}
+%the format (font, bold, italics, etc) of the "Solution" word
+\newcommand{\solutionformat}{\normalfont\itshape}
+
+%using titlesec to customize the paragraph command to have a "Problem __" header
+\titleformat{\paragraph}[runin]{\problemformat}{\theparagraph}{0pt}{}
+\renewcommand{\theparagraph}{\problemformat{Problem \arabic{paragraph}.}}
+\setcounter{secnumdepth}{4}
+\titlespacing{\paragraph}{0pt}{*1.5}{*1.5}
+
+%creating a new command \problem just so that it feels neater than \paragraph
+\newcommand\problem{\paragraph{}}
+\newcommand\numproblem[1]{
+    \paragraph*{Problem #1}
+    \setcounter{subparagraph}{0}
+}
+
+%using titlesec to customize the subparagraph command to name parts of a problem
+\titleformat{\subparagraph}[runin]{\problemformat}{\thesubparagraph}{0pt}{}
+\renewcommand{\thesubparagraph}{(\alph{subparagraph})}
+\setcounter{secnumdepth}{5}
+\titlespacing{\subparagraph}{0pt}{*1.5}{*1.5}
+%creating a new command \subproblem so it feels neater than \subparagraph and also indents for me
+%i'd like to eventually make a subproblem that would take the depth level as an argument and indent based on that, but i don't know how to do that yet
+\newcommand\subproblem{
+\subparagraph{} \hangafter=0 \hangindent=15pt
+}
+\newcommand\numsubproblem[1]{
+\subparagraph*{(#1)}\hangafter=0 \hangindent=15pt
+}
+
+%numbered subsolution that doesnt do anything
+\newcommand\numsubsolution[1]{\numsubproblem{#1}}
+
+%solution calls paragraph* but changes the header format to italics temporarily
+\newcommand\solution{
+\titleformat*{\paragraph}{\solutionformat}
+\paragraph*{Solution.}
+\setcounter{subparagraph}{0}
+\titleformat*{\paragraph}{\problemformat}
+}
+
+%subsolution uses subparagraph instead, and indents
+\newcommand\subsolution{
+\titleformat*{\subparagraph}{\solutionformat}
+\subparagraph*{Solution.} \hangafter=0 \hangindent=15pt
+\titleformat*{\subparagraph}{\problemformat}
+}
+%to add another paragraph to the same subsolution
+\newcommand\contsub{
+\titlespacing{\subparagraph}{0pt}{*1.5}{*0}
+\subparagraph*{}\hangafter=0 \hangindent=15pt
+\titlespacing{\subparagraph}{0pt}{*1.5}{*1.5}
+}
+
+\newcommand{\solskiplen}{1em}
+\newcommand{\regskiplen}{0em}
+
+%shaded solution env
+\newenvironment{solutionenv}{\begin{shaded}\setlength{\parskip}{\solskiplen}\textit{Solution.}}{\setlength{\parskip}{\regskiplen}\end{shaded}}
+
+%shaded subsolution env
+%there's an unbreakable space here which adds an extra gap but then there's no error messages so :/
+\newenvironment{subsolutionenv}{\begin{adjustwidth}{15pt}{} ~ \begin{shaded*}\setlength{\parskip}{\solskiplen}\textit{Solution.}}{\setlength{\parskip}{\regskiplen}\end{shaded*}\end{adjustwidth}}
+
+
+%hints
+\newcommand\hint[1]{\newline\textit{[Hint: #1]}}
+
+%example env
+\newenvironment{exenv}[1]{\begin{shaded}\setlength{\parskip}{\solskiplen}\textbf{Example #1.}}{\setlength{\parskip}{\regskiplen}\end{shaded}}

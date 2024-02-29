@@ -1,0 +1,401 @@
+\RequirePackage{tikz}
+\RequirePackage{xspace}
+\RequirePackage{pgfplots}
+\usepgfplotslibrary{polar}
+
+%%% EECS126 Commonly Used Symbols %%%
+\newcommand{\PP}{\mathbb{P}} % probability
+\newcommand{\EE}{\mathbb{E}} % expectation
+\newcommand{\LL}{\mathbb{L}} % likelihood
+\newcommand{\G}{\mathcal{G}} % for erdos-renyi
+
+\renewcommand{\iff}{\Leftrightarrow}
+\renewcommand{\implies}{\Rightarrow}
+
+%%% Other Useful Math Terms %%%
+\newcommand{\VV}{\mathbb{V}}
+\newcommand{\U}{\mathbb{U}}
+\newcommand{\ZZ}{\mathbb{Z}} % integers
+\newcommand{\RR}{\mathbb{R}} % reals
+\newcommand{\QQ}{\mathbb{Q}} % rationals
+\newcommand{\CC}{\mathbb{C}} % complex numbers
+\newcommand{\FF}{\mathbb{F}} % arbitrary field
+\newcommand{\NN}{\mathbb{N}} % natural numbers
+
+\newcommand{\cbrt}[1]{\sqrt[3]{#1}}
+\newcommand{\floor}[1]{\left\lfloor #1 \right\rfloor}
+\newcommand{\ceil}[1]{\left\lceil #1 \right\rceil}
+\newcommand{\mailto}[1]{\href{mailto:#1}{\texttt{#1}}}
+\newcommand{\ol}{\overline}
+\newcommand{\ul}{\underline}
+\newcommand{\wt}{\widetilde}
+\newcommand{\wh}{\widehat}
+\newcommand{\eps}{\varepsilon}
+\newcommand{\vocab}[1]{\textbf{\color{teal} #1}}
+\newcommand{\catname}{\mathsf}
+\newcommand{\hrulebar}{
+  \par\hspace{\fill}\rule{0.95\linewidth}{.7pt}\hspace{\fill}
+  \par\nointerlineskip \vspace{\baselineskip}
+}
+\newcommand{\half}{\frac{1}{2}}
+
+%More commands and math operators
+\DeclareMathOperator{\cis}{cis}
+\DeclareMathOperator*{\lcm}{lcm}
+\DeclareMathOperator*{\argmin}{arg min}
+\DeclareMathOperator*{\argmax}{arg max}
+
+%Convenient Environments
+\newenvironment{soln}{\begin{proof}[Solution]}{\end{proof}}
+\newenvironment{parlist}{\begin{inparaenum}[(i)]}{\end{inparaenum}}
+\newenvironment{gobble}{\setbox\z@\vbox\bgroup}{\egroup}
+
+%Inequalities
+\newcommand{\cycsum}{\sum_{\mathrm{cyc}}}
+\newcommand{\symsum}{\sum_{\mathrm{sym}}}
+\newcommand{\cycprod}{\prod_{\mathrm{cyc}}}
+\newcommand{\symprod}{\prod_{\mathrm{sym}}}
+
+%From H113 "Introduction to Abstract Algebra" at UC Berkeley
+\newcommand{\charin}{\text{ char }}
+\DeclareMathOperator{\sign}{sign}
+\DeclareMathOperator{\Aut}{Aut}
+\DeclareMathOperator{\Inn}{Inn}
+\DeclareMathOperator{\Syl}{Syl}
+\DeclareMathOperator{\Gal}{Gal}
+\DeclareMathOperator{\GL}{GL} % General linear group
+\DeclareMathOperator{\SL}{SL} % Special linear group
+
+\DeclareMathOperator{\coker}{coker}
+\DeclareMathOperator{\Span}{span}
+\DeclareMathOperator{\ind}{ind}
+
+%From Kiran Kedlaya's "Geometry Unbound"
+\newcommand{\dang}{\measuredangle} %% Directed angle
+\newcommand{\ray}[1]{\overrightarrow{#1}}
+\newcommand{\seg}[1]{\overline{#1}}
+\newcommand{\arc}[1]{\wideparen{#1}}
+
+%From M275 "Topology" at SJSU
+\newcommand{\id}{\mathrm{id}}
+\newcommand{\taking}[1]{\xrightarrow{#1}}
+\newcommand{\inv}{^{-1}}
+
+%From M170 "Introduction to Graph Theory" at SJSU
+\DeclareMathOperator{\diam}{diam}
+\DeclareMathOperator{\ord}{ord}
+%\newcommand{\defeq}{\overset{\mathrm{def}}{=}}
+\newcommand{\defeq}{\coloneqq}
+
+%From the USAMO .tex files
+\newcommand{\st}{^{\text{st}}}
+\newcommand{\nd}{^{\text{nd}}}
+\renewcommand{\th}{^{\text{th}}}
+\newcommand{\dg}{^\circ}
+\newcommand{\ii}{\item}
+
+% From Math 55 and Math 145 at Harvard
+\newenvironment{subproof}[1][Proof]{%
+\begin{proof}[#1] \renewcommand{\qedsymbol}{$\blacksquare$}}%
+{\end{proof}}
+
+\newcommand{\liff}{\leftrightarrow}
+\newcommand{\lthen}{\rightarrow}
+\newcommand{\opname}{\operatorname}
+\newcommand{\surjto}{\twoheadrightarrow}
+\newcommand{\injto}{\hookrightarrow}
+\newcommand{\On}{\mathrm{On}} % ordinals
+\DeclareMathOperator{\img}{im} % Image
+\DeclareMathOperator{\Img}{Im} % Image
+\DeclareMathOperator{\Coker}{Coker} % Cokernel
+\DeclareMathOperator{\Ker}{Ker} % Kernel
+\DeclareMathOperator{\rank}{rank}
+\DeclareMathOperator{\Spec}{Spec} % spectrum
+\DeclareMathOperator{\Tr}{Tr} % trace
+\DeclareMathOperator{\pr}{pr} % projection
+\DeclareMathOperator{\ext}{ext} % extension
+\DeclareMathOperator{\pred}{pred} % predecessor
+\DeclareMathOperator{\dom}{dom} % domain
+\DeclareMathOperator{\ran}{ran} % range
+\DeclareMathOperator{\Hom}{Hom} % homomorphism
+\DeclareMathOperator{\End}{End} % endomorphism
+\DeclareMathOperator{\ch}{ch} % characteristic
+
+% Things Lie
+\newcommand{\kg}{\mathfrak g}
+\newcommand{\kh}{\mathfrak h}
+\newcommand{\kn}{\mathfrak n}
+\newcommand{\ku}{\mathfrak u}
+\newcommand{\kz}{\mathfrak z}
+\DeclareMathOperator{\Ext}{Ext} % Ext functor
+\DeclareMathOperator{\Tor}{Tor} % Tor functor
+
+% More script letters etc.
+\newcommand{\SA}{\mathscr A}
+\newcommand{\SB}{\mathscr B}
+\newcommand{\SC}{\mathscr C}
+\newcommand{\SD}{\mathscr D}
+\newcommand{\SF}{\mathscr F}
+\newcommand{\SG}{\mathscr G}
+\newcommand{\SH}{\mathscr H}
+\newcommand{\OO}{\mathcal O}
+
+
+%%fakesection Napkin Macros
+\newcommand{\Zc}[1]{\ZZ/#1\ZZ}
+\newcommand{\Zcc}[1]{\ZZ/(#1)\ZZ}
+\newcommand{\Zm}[1]{(\ZZ/#1\ZZ)^\times}
+\newcommand{\TT}{\mathbb T}
+\newcommand{\im}{^{\text{img}}} % or ``?
+\newcommand{\pre}{^{\text{pre}}}
+\newcommand{\normalin}{\trianglelefteq}
+\newcommand{\triv}{\mathrm{triv}}
+\newcommand{\largeotimes}[1]{\mathop{\otimes}\limits_{#1}}
+\newcommand{\Mat}{\mathrm{Mat}}
+\newcommand{\PGL}[1]{\mathbf{PGL}_{#1}(\CC)}
+
+\DeclareMathOperator{\Stab}{Stab}
+\DeclareMathOperator{\FixPt}{FixPt}
+\DeclareMathOperator{\refl}{refl}
+\DeclareMathOperator{\Fun}{Fun}
+\DeclareMathOperator{\Irrep}{Irrep}
+\DeclareMathOperator{\Res}{Res}
+\DeclareMathOperator{\Reg}{Reg}
+\DeclareMathOperator{\Classes}{Classes}
+\DeclareMathOperator{\Frac}{Frac}
+\newcommand{\FunCl}{\Fun_{\mathrm{class}}}
+\newcommand{\Homrep}{\Hom_{\mathrm{rep}}}
+\newcommand{\ab}{^\text{ab}} % abelianization
+\DeclareMathOperator{\ev}{ev}
+\DeclareMathOperator{\Wind}{\mathbf I}
+\newcommand{\Ctriv}{\CC_{\mathrm{triv}}}
+\newcommand{\Csign}{\CC_{\mathrm{sign}}}
+
+% Alg geom macros
+\newcommand{\V}{\mathcal V}
+\newcommand{\Vp}{\mathcal V_{\text{pr}}}
+\newcommand{\Aff}{\mathbb A}
+\newcommand{\II}{\mathcal I_{\text{rad}}}
+\newcommand{\RP}{\mathbb{RP}}
+\newcommand{\CP}{\mathbb{CP}}
+\newcommand{\Cl}{\mathrm{Cl}}
+\newcommand{\restrict}[1]{\bgroup\restriction_{#1}\egroup}
+\DeclareMathOperator{\Opens}{OpenSets}
+\DeclareMathOperator{\Proj}{Proj}
+\DeclareMathOperator{\res}{res}
+\newcommand{\km}{\mathfrak m}
+\newcommand{\sh}{^\mathrm{sh}}
+
+\renewcommand{\Re}{\opname{Re}}
+\renewcommand{\Im}{\opname{Im}}
+
+%% Category Theory macros
+\renewcommand{\AA}{\mathcal A}
+\newcommand{\BB}{\mathcal B}
+\newcommand{\obj}{\operatorname{obj}}
+\newcommand{\op}{^{\mathrm{op}}}
+
+
+\usepackage{tkz-graph}
+\pgfarrowsdeclare{biggertip}{biggertip}{%
+  \setlength{\arrowsize}{1pt}
+  \addtolength{\arrowsize}{.1\pgflinewidth}
+  \pgfarrowsrightextend{0}
+  \pgfarrowsleftextend{-5\arrowsize}
+}{%
+  \setlength{\arrowsize}{1pt}
+  \addtolength{\arrowsize}{.1\pgflinewidth}
+  \pgfpathmoveto{\pgfpoint{-5\arrowsize}{4\arrowsize}}
+  \pgfpathlineto{\pgfpointorigin}
+  \pgfpathlineto{\pgfpoint{-5\arrowsize}{-4\arrowsize}}
+  \pgfusepathqstroke
+}
+\tikzset{
+	EdgeStyle/.style = {>=biggertip}
+}
+
+\usepackage[all,cmtip,2cell]{xy}
+\UseTwocells
+\newcommand\nattfm[5]{\xymatrix@C+2pc{#1 \rtwocell<4>^{#2}_{#4}{\; #3} & #5}}
+
+%% Alg Top macros
+\DeclareMathOperator{\Cells}{Cells}
+\newcommand{\HdR}{H_{\mathrm{dR}}}
+
+%% Alg NT macros
+\newcommand{\ka}{\mathfrak a}
+\newcommand{\kb}{\mathfrak b}
+\newcommand{\kp}{\mathfrak p}
+\newcommand{\kq}{\mathfrak q}
+
+\newcommand{\Frob}{\mathrm{Frob}}
+\DeclareMathOperator{\Norm}{N}
+\DeclareMathOperator{\Ram}{Ram}
+\newcommand{\TrK}{\Tr_{K/\QQ}}
+\newcommand{\NK}{\Norm_{K/\QQ}}
+\newcommand{\kf}{\mathfrak f}
+\newcommand{\kP}{\mathfrak P}
+\newcommand{\kQ}{\mathfrak Q}
+
+%% Diff geo macros
+\newcommand{\ee}{\mathbf e}
+\newcommand{\fpartial}[2]{\frac{\partial #1}{\partial #2}}
+
+%% ST macros
+\newcommand{\CH}{\mathsf{CH}}
+\newcommand{\ZFC}{\mathsf{ZFC}}
+
+\newcommand{\Name}{\text{Name}}
+\newcommand{\Po}{\mathbb P}
+\newcommand{\nrank}{\opname{n-rank}} % ranks
+
+\newcommand{\EmptySet}{\mathrm{EmptySet}}
+\newcommand{\PowerSet}{\mathrm{PowerSet}}
+\newcommand{\Pairing}{\mathrm{Pairing}}
+\newcommand{\Infinity}{\mathrm{Infinity}}
+\newcommand{\Extensionality}{\mathrm{Extensionality}}
+\newcommand{\Foundation}{\mathrm{Foundation}}
+\newcommand{\Union}{\mathrm{Union}}
+\newcommand{\Comprehension}{\mathrm{Comprehension}}
+\newcommand{\Replacement}{\mathrm{Replacement}}
+
+\usepackage{mathrsfs}
+
+\newcommand\MM{\mathscr M}
+\newcommand\llex{<_{\text{lex}}}
+
+\DeclareMathOperator{\cof}{cof}
+
+%% Quantum macros
+\usepackage{braket}
+\newcommand{\cvec}[1]{\begin{bmatrix} #1 \end{bmatrix}}
+\newcommand{\pair}[2]{\begin{bmatrix} #1 \\ #2 \end{bmatrix}}
+\newcommand{\zup}{\ket\uparrow}
+\newcommand{\zdown}{\ket\downarrow}
+\newcommand{\xup}{\ket\rightarrow}
+\newcommand{\xdown}{\ket\leftarrow}
+\newcommand{\yup}{\ket\otimes}
+\newcommand{\ydown}{\ket\odot}
+\newcommand{\UCNOT}{U_{\mathrm{CNOT}}}
+\newcommand{\UQFT}{U_{\mathrm{QFT}}}
+
+%% Measure
+\DeclareMathOperator{\Var}{Var}
+\newcommand{\cme}{^\text{cm}}
+\newcommand{\asto}{\xrightarrow{\text{a.s.}}}
+
+%% Hot chili peppers
+\reversemarginpar
+\newcommand{\prechili}{\vspace*{0.3em}\hspace*{1.5em}}
+\newcommand{\nochili}{\hspace*{1.5em}}
+\newcommand{\chili}{\includegraphics[width=1.5em]{media/chili.png}}
+\newcommand{\gim}{\marginpar{\prechili\nochili\nochili\chili}}
+\newcommand{\yod}{\marginpar{\prechili\nochili\chili\chili}}
+\newcommand{\kurumi}{\marginpar{\prechili\chili\chili\chili}}
+
+\newcommand{\poisson}{\mathbin{\alpha\kern-0.5em{\cdot}\:}} % for the fish symbol
+\newcommand{\person}{\resizebox{!}{2.5ex}{\usebox{\stickfiguretikz}}\xspace} % for the person symbol
+\newcommand{\flower}{\resizebox{1em}{!}{\usebox{\flowerbox}}\xspace} % for the flower symbol
+
+% Problems
+\newcommand{\UNSAT}{\textsc{UNSAT}}
+\newcommand{\SAT}{\textsc{SAT}}
+\newcommand{\STCONN}{\textsc{stconn}}
+\newcommand{\OPSTCONN}{\textsc{Optimal-stconn}}
+\newcommand{\STRCONN}{\textsc{Strong-Conn}}
+\newcommand{\CHR}{\textsc{Chromatic\#4}}
+\newcommand{\CLQ}{\textsc{CLIQUE}}
+\newcommand{\COL}{\textsc{3COL}}
+
+% Classes
+% \renewcommand{\P}{\textsf{P}}
+\newcommand{\NP}{\textsf{NP}}
+\renewcommand{\L}{\textsf{L}}
+\newcommand{\NL}{\textsf{NL}}
+\newcommand{\coNP}{\textsf{coNP}}
+\newcommand{\coNL}{\textsf{coNL}}
+\newcommand{\MAJPP}{\textsf{MAJPP}}
+\newcommand{\coRP}{\textsf{coRP}}
+\newcommand{\ZPP}{\textsf{ZPP}}
+\newcommand{\PPoly}{\textsf{P/poly}}
+\newcommand{\BPP}{\textsf{BPP}}
+\newcommand{\IP}{\textsf{IP}}
+\newcommand{\PSPACE}{\textsf{PSPACE}}
+\newcommand{\TIME}{\textsf{TIME}}
+\newcommand{\SPACE}{\textsf{SPACE}}
+
+% these are custom commands and symbols specific to my pset template
+\NeedsTeXFormat{LaTeX2e}
+\ProvidesPackage{symbolsandcommands}[symbols and commands for personal use]
+\RequirePackage{tikz}
+\RequirePackage{xspace}
+\RequirePackage{pgfplots}
+\usepgfplotslibrary{polar}
+\pgfplotsset{compat=newest}
+
+% creating the person stick figure
+\newsavebox{\stickfiguretikz}
+\sbox{\stickfiguretikz}{%
+\begin{tikzpicture}[baseline= 2ex]
+    \tikzstyle{head} = [circle, draw, scale=2, ultra thick]
+	\node [style=head] (0) at (0, 3) {};
+	\node (1) at (-0.75, 1.55) {};
+	\node (2) at (0.75, 1.55) {};
+	\node (3) at (-0.425, 2.1) {};
+	\node (4) at (0.425, 2.1) {};
+	\node (5) at (-0.4, 0) {};
+	\node (6) at (0.4, 0) {};
+	\node (7) at (0, 1.5) {};
+	\draw [in=90, out=-165, ultra thick] (0.south) to (1.center);
+	\draw [in=90, out=-15, ultra thick] (0.south) to (2.center);
+	\draw [bend left=5, ultra thick] (1.center) to (3.center);
+	\draw [bend right=5, ultra thick] (2.center) to (4.center);
+	\draw [bend left=5, ultra thick] (3.center) to (5.center);
+	\draw [bend right=5, ultra thick] (4.center) to (6.center);
+	\draw [ultra thick] (5.center) to (7.center);
+	\draw [ultra thick] (7.center) to (6.center);
+\end{tikzpicture}%
+}
+
+\definecolor{stemgreen}{RGB}{79, 207, 14}
+\definecolor{flowerpurple}{RGB}{200, 145, 245}
+\newsavebox{\flowerbox}
+\sbox{\flowerbox}{%
+  \begin{tikzpicture}[x=1ex, y=1ex, baseline=5ex]
+    \begin{scope}[scale=4, shift={(4.95,-0.55)}]
+      \node (0) at (0, -5) {};
+      \node (1) at (4.25, 1.75) {};
+      \node (2) at (0.75, 6.25) {};
+      \draw [in=90, out=150, color=stemgreen, line width=0.8mm] (1.center) to (0.center);
+      \draw [in=-120, out=-105, looseness=2.00, color=stemgreen, line width=0.8mm] (2.center) to (1.center);
+    \end{scope}
+      \begin{polaraxis}[grid=none, axis lines=none]
+        \addplot[mark=none,domain=0:360,samples=300,color=flowerpurple, line width=0.8mm, fill=white] {cos(x*4-70)};
+      \end{polaraxis}
+  \end{tikzpicture}%
+}
+
+\DeclareMathOperator{\spn}{span} % span
+\DeclareMathOperator{\adj}{adj} % adjugate/adjoint
+\DeclareMathOperator{\vol}{Vol} % volume
+\DeclareMathOperator{\var}{Var} % variance
+\DeclareMathOperator{\stab}{Stab} % stabilizer
+\DeclareMathOperator{\conj}{conj} % conjugation
+
+\newcommand{\limty}[1]{\lim_{#1 \to \infty}} % limit to infinity. Usage: \limty{n}
+
+\newcommand{\subt}[2]{#1_{\text{#2}}} % text subscript. Usage: \subt{a}{text}
+\newcommand{\supt}[2]{#1^{\text{#2}}} % text superscript. Usage: \supt{a}{text}
+
+\newcommand{\dspace}{\,}
+\newcommand{\dstyle}{\text} 
+\newcommand{\dx}{\dspace{\dstyle d}x}
+
+%%% weird 154 things %%%
+\newcommand{\setbld}[2]{\ensuremath{\left\{#1 ~\middle|~ #2\right\}}}
+\def\B{\ensuremath{\left\{0, 1\right\}}}
+\newcommand{\setbldn}[2]{\ensuremath{\{#1 ~|~ #2\}}}  
+\def\BigO{\ensuremath{\mathcal{O}}}
+\def\ATM{\ensuremath{\textsc{A}_\textsc{TM}}}
+\newcommand{\repr}[1]{\ensuremath{\langle{#1}\rangle}}
+\def\NP{\ensuremath{\textsf{NP}}}

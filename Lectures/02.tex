@@ -1,0 +1,76 @@
+\lecture{What is Fair? -- 2/07/24}
+
+Calculating PnL
+\begin{itemize}
+    \item \vocab{PnL}: Profit and Loss, i.e. how much money you're making
+    \item Common scenario: there's a resting offer on the book at $ \$X $ price, someone comes and takes it
+    \item I sold the product for $ \$X $ each
+    \item If the true value (\vocab{fair}) is $ \$Y $, $ \$(X-Y) $ is your PnL on each trade
+    \item If you traded $ n $ contracts, then your PnL is $ \$n \cdot (X-Y) $
+\end{itemize}
+
+A \vocab{theoretical fair} is a valuation derived from data / model that you build
+Eventually, the box (contract) will reach a \vocab{market price} (for now, we're going to take the midpoint between the best bid and offer)
+
+Let's say the midpoint for the box is \$19000. You think it's \$15600. Who's right? What do you want to do?
+\begin{itemize}
+    \item Maybe you're kind of confident, but you should take into consideration what the market thinks
+    \item For 10 vs 1000 box-traders, the more people trading the more it's likely they are more right (if they're smart)
+    \item Basically, your \vocab{internal fair} (what you ``actually believe'') is probably somewhere in between, and many times closer to the market
+\end{itemize}
+
+What is... ``Actually'' Fair?
+\begin{itemize}
+    \item Figuring out the \vocab{true fair} is not that straightforward, but it's what we hope to be able to model
+    \item Maybe you have some crystal ball that tells you what the stock price will be at any point is in the future
+    \item But really, you never know exactly where the price will go. There's some irriducible noise that you shouldn't expect to predict
+\end{itemize}
+
+True Fair 2 Electric Boogaloo
+
+\vocab{True fair}: the expected value of the future price given all the available information
+
+\vocab{Efficient Market Hypothesis (EMH)}: In a highly liquid market like domestic equities, the efficient market hypothesis states that the market price is the true fair
+\begin{itemize}
+    \item Markets should have already factored in all information that one can know about the stock price
+    \item In that case, future moves should be unpredictable, and it should look like a random walk
+    \item Everything is 0 EV
+    \item This is why index investing is more popular, since stocks generally just go up
+\end{itemize}
+
+Edge
+\begin{itemize}
+    \item What happens if everyone just index invests?
+        \begin{itemize}
+            \item Well, prices would just rise or flal across the board, wouldn't reflect thoeretical fairs
+            \item Someone needs to do \vocab{price discovery}: pushing price back to fair
+            \item Let's just call these people ``hedge funds'' (kind of an oversimplification)
+        \end{itemize}
+    \item \vocab{Edge}: if your fair is closer to the true fair than the market price
+    \item Sources of edge:
+        \begin{itemize}
+            \item \vocab{Analytical}: better at interpreting data and drawing conclusions than the market
+            \item Informational: have access to data that others do not
+            \item \vocab{Temporal}: move fast, first to react to news
+        \end{itemize}
+\end{itemize}
+
+You should \textit{constantly} be asking yourself what your edge is. If you don't have a clear edge, you probably shouldn't be trading.
+
+\textbf{Fading: Scenario A}
+
+Market making on AAPL, 99@101. Most of the day you're doing both sides of the trades and making a steady profit. Someone comes in and lifts all the 101 offers. You put out more offers at 101. Someone buys those too. Happens two more times. 
+
+Maybe consider moving your internal fair up.
+
+\textbf{Fading: Scenario B}
+
+Investor buying AAPL. Market 99@101. Buy a lot at 101, market doesn't move, buy more, price doesn't move. Same thing repeats.
+
+Maybe consider moving your internal fair down— market makers appear not to agree with your belief that AAPL is worth more than 101.
+
+When other people have edge and are trading against you, you should probably update your internal fair to incorporate their beliefs. We say that you \vocab{fade} to the market.
+\begin{itemize}
+    \item How big they bet against you should probably reflects how confident they are
+    \item You should probably be thinking about their intentions and who they are (do they actually have edge?)
+\end{itemize}
